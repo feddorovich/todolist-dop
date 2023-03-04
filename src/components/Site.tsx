@@ -23,11 +23,7 @@ export const Site = () => {
                 </div>
                 <div className={styles.content}>
                     <Routes>
-                        {/*<Route path={'/'} element={<Navigate to={'/'}/>}/>*/}
 
-                        {/*<Route path={'/page1'} element={<PageOne/>}/>*/}
-                        <Route path={'/page/:id'} element={<Component pages={dataState.pages}/>} />
-                        <Route path={'/*'} element={<Error404/>}/>
                     </Routes>
                 </div>
             </div>
