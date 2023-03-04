@@ -9,7 +9,7 @@ type PropsType = {
 
 export const Page = (props: PropsType) => {
 
-    const params = useParams()
+    let params = useParams()
 
     if (!props.pages[Number(params.id)]?.heading) {
         return <Navigate to={'/*'}/>
@@ -17,8 +17,8 @@ export const Page = (props: PropsType) => {
 
     return (
         <div>
-            <div>{props.pages[Number(params.id)].heading}</div>
             <div>{params.id}</div>
+            <div>{props.pages[Number(params.id)].heading}</div>
         </div>
     );
 };

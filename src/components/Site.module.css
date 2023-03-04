@@ -32,6 +32,7 @@
 }
 
 .nav a.active {
-    color: #7fb8f1;
-    text-decoration: underline;
+    color: lightseagreen;
+    text-decoration: none;
+    font-weight: bold;
 }

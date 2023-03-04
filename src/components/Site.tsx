@@ -15,18 +15,19 @@ export const Site = () => {
             <div className={styles.header}><h1>HEADER</h1></div>
             <div className={styles.body}>
                 <div className={styles.nav}>
-                        <div><NavLink to={'/'}>Homepage</NavLink></div>
-                        <div><NavLink to={'/page/0'}>PAGE 0</NavLink></div>
-                        <div><NavLink to={'/page/1'}>PAGE 1</NavLink></div>
-                        <div><NavLink to={'/page/2'}>PAGE 2</NavLink></div>
-                        <div><NavLink to={'/*'}>404</NavLink></div>
+                    <div><NavLink to={'/'} className={({isActive})=>isActive ? styles.active : styles.navLink}>HOME PAGE</NavLink></div>
+                    <div><NavLink to={'/page/0'} className={({isActive})=>isActive ? styles.active : styles.navLink}>PAGE 0</NavLink></div>
+                    <div><NavLink to={'/page/1'} className={({isActive})=>isActive ? styles.active : styles.navLink}>PAGE 1</NavLink></div>
+                    <div><NavLink to={'/page/2'} className={({isActive})=>isActive ? styles.active : styles.navLink}>PAGE 2</NavLink></div>
+                    <div><NavLink to={'/page/3'} className={({isActive})=>isActive ? styles.active : styles.navLink}>PAGE 3</NavLink></div>
+                    <div><NavLink to={'/*'} className={({isActive})=>isActive ? styles.active : styles.navLink}>404</NavLink></div>
                 </div>
                 <div className={styles.content}>
-                        <Routes>
-                                <Route path={'/'} element={<div>HOME PAGE</div>}/>
-                                <Route path={'/page/:id'} element={<Page pages={dataState.pages}/>}/>
-                                <Route path={'/*'} element={<Error404/>}/>
-                        </Routes>
+                    <Routes>
+                        <Route path={'/'} element={<div>HOME PAGE</div>}/>
+                        <Route path={'/page/:id'} element={<Page pages={dataState.pages}/>}/>
+                        <Route path={'/*'} element={<Error404/>}/>
+                    </Routes>
                 </div>
             </div>
         </div>
