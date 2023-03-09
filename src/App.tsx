@@ -1,17 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 
-type TodolistType = {
-    todolistId: string
-    title: string
-    filter: FilterValuesType
-    tasks: Array<TasksType>
-    students: Array<string>
-}
-
-type TodoType = {
+type ObjectType = {
     title: string
     filter: FilterValuesType
     tasks: Array<TasksType>
@@ -46,9 +38,8 @@ function App() {
     //         {id: v1(), title: "React Book", isDone: true}
     //     ]
     // });
-    const [todolists, setTodolists] = useState<TodolistType[]>([])
 
-    const todo: TodoType[]  = [
+    const [todo, setTodo] = useState<Array<ObjectType>>([
         {
             title: "What to learn",
             filter: "all",
@@ -164,46 +155,32 @@ function App() {
                 'Ralphie Hebert',
             ]
         }
-    ]
+    ])
 
-    useEffect(()=>{
-        setTodolists(todo.map(el => ({...el, todolistId: v1()})))
-    }, [])
 
-    console.log(todolists)
+
 
     function removeTask(id: string, todolistId: string) {
-        setTodolists(todolists.map(tl => tl.todolistId === todolistId
-            ? {...tl, tasks: tl.tasks.filter(f => f.taskId !== id) }
-            : tl))
-
-/*        //достанем нужный массив по todolistId:
+        //достанем нужный массив по todolistId:
         let todolistTasks = tasks[todolistId];
         // перезапишем в этом объекте массив для нужного тудулиста отфилтрованным массивом:
         tasks[todolistId] = todolistTasks.filter(t => t.id != id);
         // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-        setTasks({...tasks});*/
+        setTasks({...tasks});
     }
 
     function addTask(title: string, todolistId: string) {
-        let newTask = {taskId: v1(), title: title, isDone: false}
-        setTodolists(todolists.map (tl => tl.todolistId === todolistId
-        ? {...tl, tasks: [newTask, ...tl.tasks]}
-        :tl))
-/*        let task = {id: v1(), title: title, isDone: false};
+        let task = {id: v1(), title: title, isDone: false};
         //достанем нужный массив по todolistId:
         let todolistTasks = tasks[todolistId];
         // перезапишем в этом объекте массив для нужного тудулиста копией, добавив в начало новую таску:
         tasks[todolistId] = [task, ...todolistTasks];
         // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-        setTasks({...tasks});*/
+        setTasks({...tasks});
     }
 
     function changeStatus(id: string, isDone: boolean, todolistId: string) {
-        setTodolists(todolists.map(tl => tl.todolistId === todolistId
-            ? {...tl, tasks: tl.tasks.map( t => t.taskId === id ? {...t, isDone} :t)}
-            : tl))
-/*        //достанем нужный массив по todolistId:
+        //достанем нужный массив по todolistId:
         let todolistTasks = tasks[todolistId];
         // найдём нужную таску:
         let task = todolistTasks.find(t => t.id === id);
@@ -212,35 +189,31 @@ function App() {
             task.isDone = isDone;
             // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
             setTasks({...tasks});
-        }*/
+        }
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        setTodolists(todolists.map (tl => tl.todolistId === todolistId
-        ? {...tl, filter: value}
-        : tl))
-/*        let todolist = todolists.find(tl => tl.id === todolistId);
+        let todolist = todolists.find(tl => tl.id === todolistId);
         if (todolist) {
             todolist.filter = value;
             setTodolists([...todolists])
-        }*/
+        }
     }
 
     function removeTodolist(id: string) {
-        setTodolists(todolists.filter(tl => tl.todolistId !== id))
-/*        // засунем в стейт список тудулистов, id которых не равны тому, который нужно выкинуть
+        // засунем в стейт список тудулистов, id которых не равны тому, который нужно выкинуть
         setTodolists(todolists.filter(tl => tl.id != id));
         // удалим таски для этого тудулиста из второго стейта, где мы храним отдельно таски
         delete tasks[id]; // удаляем св-во из объекта... значением которого являлся массив тасок
         // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-        setTasks({...tasks});*/
+        setTasks({...tasks});
     }
 
     return (
         <div className="App">
             {
                 todolists.map(tl => {
-                    let allTodolistTasks = tl.tasks;
+                    let allTodolistTasks = tasks[tl.id];
                     let tasksForTodolist = allTodolistTasks;
 
                     if (tl.filter === "active") {
@@ -251,8 +224,8 @@ function App() {
                     }
 
                     return <Todolist
-                        key={tl.todolistId}
-                        id={tl.todolistId}
+                        key={tl.id}
+                        id={tl.id}
                         title={tl.title}
                         tasks={tasksForTodolist}
                         removeTask={removeTask}
